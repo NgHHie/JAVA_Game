@@ -33,7 +33,7 @@ public class LevelButton extends Button {
 
 	private void loadImgs() {
 		String path1 = "/level_button/bt" + 	String.format("%d", rowIndex) + ".png";
-		String path2 = "/level_button/bt" + 	String.format("%d", rowIndex) + "_x.png";
+		String path2 = "/level_button/bt_x.png";
 		
 		img1 = GetSpriteAtlas(path1);
 		img2 = GetSpriteAtlas(path2);
