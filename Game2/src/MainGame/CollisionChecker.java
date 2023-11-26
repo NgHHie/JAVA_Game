@@ -85,7 +85,7 @@ public class CollisionChecker {
 	}
 
 	public void checkObject(Entity entity) {
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 5; i++) {
 			if (gp.obj[i] != null) {
 				gp.setSolid(entity, gp.obj[i]);
 
@@ -98,7 +98,7 @@ public class CollisionChecker {
 						entity.solidArea.x += (int) entity.speed;
 						break;
 					}
-					if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
+					if (entity.solidArea.intersects(gp.obj[i].solidArea) && entity.dead == false) {
 						if (gp.obj[i].name.compareTo("Key") == 0) {
 							gp.obj[i].collision = true;
 							if (entity.speed == 5) {
@@ -130,17 +130,14 @@ public class CollisionChecker {
 						if (entity.solidArea.intersects(gp.obj[i].solidArea)
 								&& entity.worldY >= gp.obj[i].worldY + gp.obj[i].solidArea.height - 16) {
 //						 entity.worldY = gp.obj[i].worldY - 48;
-							entity.speedY = 1;
-							entity.direction = "down";
+							entity.speedY = 0;
+//							entity.direction = "down";
 							entity.collisionOnY = true;
 						}
 						break;
 					}
 
 					if (entity.collisionOn2[i] == false ||
-//						 entity.direction == "" || 
-//						 gp.obj[i].worldY - entity.worldY > 48 ||
-//						 entity.worldY - gp.obj[i].worldY > 48 ||
 							(entity.worldX > gp.obj[i].worldX && entity.direction.compareTo("right") == 0)
 							|| (gp.obj[i].worldX > entity.worldX && entity.direction.compareTo("left") == 0)) {
 						gp.obj[i].collision = false;
@@ -156,8 +153,9 @@ public class CollisionChecker {
 						gp.sttobj = i;
 						entity.moveObj = true;
 						gp.obj[i].direction = entity.direction;
-						gp.obj[i].update();
 						gp.upobj[i] = true;
+						gp.obj[i].update();
+//						gp.upobj[i] = true;
 					}
 
 				}
@@ -234,25 +232,75 @@ public class CollisionChecker {
 
 	public void checkObwOb(SuperObject entity, int k) {
 		for (int i = 0; i <= 1; i++) {
-			if (gp.obj[i] != null && i != k) {
+			if (gp.obj[i] != null && i != k 
+					&& gp.upobj[i] == false
+					) {
 				int tmpx = entity.solidArea.x;
 				int tmpy = entity.solidArea.y;
 				entity.solidArea.x = entity.worldX;
 				entity.solidArea.y = entity.worldY;
 				gp.obj[i].solidArea.x = gp.obj[i].worldX + gp.obj[i].solidArea.x;
 				gp.obj[i].solidArea.y = gp.obj[i].worldY + gp.obj[i].solidArea.y;
+				
+				//
+				switch (entity.direction) {
+				case "left":
+					entity.solidArea.x -= (int) entity.speedobj;
+					break;
+				case "right":
+					entity.solidArea.x += (int) entity.speedobj;
+					break;
+				}
+				if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
+					if (gp.obj[i].name.compareTo("Key") == 0) {
+						gp.obj[i].collision = true;
+//						if (entity.speedobj == 5) {
+//							entity.speedobj = (float) 1.5;
+//						}
+						entity.collisionOn2[i] = true;
+						gp.obj[i].speedobj = entity.speedobj;
+					} else if (gp.obj[i].name.compareTo("Elevator") == 0) {
+						entity.collisionOn = true;
+					}
+				} else {
+					entity.collisionOn2[i] = false;
+				}
+				//
 
 				switch (entity.directionY) {
 				case "down":
 					entity.solidArea.y += entity.speedY;
-					if (entity.solidArea.intersects(gp.obj[i].solidArea) && entity.worldY <= gp.obj[i].worldY - 48) {
-//						 entity.worldY = gp.obj[i].worldY - 48;
+					if (entity.solidArea.intersects(gp.obj[i].solidArea)
+							&& entity.worldY <= gp.obj[i].worldY - 48
+							) {
+//						entity.worldY = gp.obj[i].worldY - 48;
 						entity.speedY = 1;
+						
 						entity.collisionOnY = true;
 						entity.inAir = false;
 						entity.onGround = true;
+						entity.collisionOn2[i] = false;
 					}
 					break;
+				}
+				
+				if (entity.collisionOn2[i] == false ||
+						(entity.worldX > gp.obj[i].worldX && entity.direction.compareTo("right") == 0)
+						|| (gp.obj[i].worldX > entity.worldX && entity.direction.compareTo("left") == 0)) {
+					gp.obj[i].collision = false;
+					entity.collisionOn2[i] = false;
+					gp.moveobj[i] = false;
+					gp.obj[i].slideOn = false;
+					gp.obj[i].direction = "";
+					gp.obj[i].speedobj = 0;
+				}
+				if (entity.collisionOn2[i] == true) {
+					gp.moveobj[i] = true;
+					gp.sttobj = i;
+					gp.obj[i].direction = entity.direction;
+					gp.upobj[i] = true;
+					gp.obj[i].update();
+//					gp.upobj[i] = true;
 				}
 
 				entity.solidArea.x = tmpx;
@@ -261,7 +309,47 @@ public class CollisionChecker {
 				gp.obj[i].solidArea.y = gp.obj[i].solidAreaDefaultY;
 
 			}
+			if (gp.obj[i] != null && i != k 
+					&& gp.upobj[i] == true
+					) {
+				int tmpx = entity.solidArea.x;
+				int tmpy = entity.solidArea.y;
+				entity.solidArea.x = entity.worldX;
+				entity.solidArea.y = entity.worldY;
+				gp.obj[i].solidArea.x = gp.obj[i].worldX + gp.obj[i].solidArea.x;
+				gp.obj[i].solidArea.y = gp.obj[i].worldY + gp.obj[i].solidArea.y;
+				
+				//
+				
+
+				switch (entity.directionY) {
+				case "down":
+					entity.solidArea.y += entity.speedY;
+					if (entity.solidArea.intersects(gp.obj[i].solidArea)
+							&& entity.worldY <= gp.obj[i].worldY - 48
+							) {
+//						entity.worldY = gp.obj[i].worldY - 48;
+						entity.speedY = 1;
+						
+						entity.collisionOnY = true;
+						entity.inAir = false;
+						entity.onGround = true;
+						entity.collisionOn2[i] = false;
+					}
+					break;
+				}
+				
+				
+
+				entity.solidArea.x = tmpx;
+				entity.solidArea.y = tmpy;
+				gp.obj[i].solidArea.x = gp.obj[i].solidAreaDefaultX;
+				gp.obj[i].solidArea.y = gp.obj[i].solidAreaDefaultY;
+
+			}
+		
 		}
+		
 	}
 
 }

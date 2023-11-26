@@ -9,6 +9,8 @@ import MainGame.GamePanel;
 
 public class Key extends SuperObject {
 
+	private static final String Player = null;
+
 	public Key(GamePanel gp) {
 		super(gp);
 		this.inAir = true;
@@ -16,7 +18,7 @@ public class Key extends SuperObject {
 		this.speedY = 1;
 		this.name = "Key";
 		try {
-			this.image = ImageIO.read(getClass().getResourceAsStream("/ui/scibox.png"));
+			this.image = ImageIO.read(getClass().getResourceAsStream("/object/scibox.png"));
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -34,8 +36,9 @@ public class Key extends SuperObject {
 			this.directionY = "down";
 		this.collisionOn = false;
 		this.collisionOnY = false;
-		gp.cChecker.checkTileObject(this);
 		gp.cChecker.checkObwOb(this, gp.sttobj);
+		gp.cChecker.checkTileObject(this);
+//		gp.cChecker.checkObwOb(this, gp.sttobj);
 
 		// IF COLLISION IS FALSE, PLAYER CAN MOVE
 		if (this.collisionOn == false) {
@@ -61,10 +64,10 @@ public class Key extends SuperObject {
 		}
 
 		if (this.inAir) {
-			this.speedY += 1;
+			if(this.speedY <= 15) this.speedY += 0.75;
 		}
 
-		if (gp.player != null) {
+		if (gp.player != null && gp.player.dead == false) {
 			if (this.inAir == true) {
 				if (gp.player.worldY >= this.worldY && gp.player.worldY <= this.worldY + 16) {
 					if (gp.player.worldX >= this.worldX - 40 && gp.player.worldX <= this.worldX + 40) {
@@ -72,8 +75,10 @@ public class Key extends SuperObject {
 						this.speedY = 3;
 						gp.player.speedY = this.speedY;
 						gp.player.directionY = "down";
+			
 						if (gp.player.onGround == true) {
-							gp.player = null;
+							gp.player.dead = true;
+							gp.player.aniIndex = 0;
 						}
 					}
 				}
@@ -91,16 +96,17 @@ public class Key extends SuperObject {
 		}
 
 		for (int i = 0; i < 5; i++) {
-			if (gp.clone[i] != null) {
+			if (gp.clone[i] != null && gp.clone[i].dead == false) {
 				if (this.inAir == true) {
 					if (gp.clone[i].worldY >= this.worldY && gp.clone[i].worldY <= this.worldY + 16) {
 						if (gp.clone[i].worldX >= this.worldX - 40 && gp.clone[i].worldX <= this.worldX + 40) {
 							gp.clone[i].worldY = this.worldY + 33;
 							gp.clone[i].speedY = this.speedY;
 							gp.clone[i].directionY = "down";
-							System.out.println(gp.clone[i].onGround);
+//							System.out.println(gp.clone[i].onGround);
 							if (gp.clone[i].onGround == true) {
-								gp.clone[i] = null;
+								gp.clone[i].dead = true;
+								gp.clone[i].aniIndex = 0;
 							}
 						}
 					}
@@ -119,14 +125,34 @@ public class Key extends SuperObject {
 			}
 		}
 
+//		for (int i = 0; i <= 1; i++) {
+//			if (gp.obj[i] != null && i != gp.sttobj && this.inAir == false) {
+//				if (gp.obj[i].worldY >= this.worldY - 40 && gp.obj[i].worldY <= this.worldY + 40) {
+////				if(gp.obj[i].worldY == gp.obj[k].worldY ) {
+//					if (gp.obj[i].worldX >= this.worldX && gp.obj[i].worldX <= this.worldX + 48) {
+//						gp.obj[i].worldX = this.worldX + 48;
+//					} else if (gp.obj[i].worldX <= this.worldX && gp.obj[i].worldX >= this.worldX - 48) {
+//						gp.obj[i].worldX = this.worldX - 48;
+//					}
+//				}
+//			}
+//		}
+		
 		for (int i = 0; i <= 1; i++) {
 			if (gp.obj[i] != null && i != gp.sttobj && this.inAir == false) {
-				if (gp.obj[i].worldY >= this.worldY - 40 && gp.obj[i].worldY <= this.worldY + 40) {
+				if (gp.obj[i].worldY >= this.worldY && gp.obj[i].worldY <= this.worldY ) {
 //				if(gp.obj[i].worldY == gp.obj[k].worldY ) {
-					if (gp.obj[i].worldX >= this.worldX && gp.obj[i].worldX <= this.worldX + 48) {
-						gp.obj[i].worldX = this.worldX + 48;
-					} else if (gp.obj[i].worldX <= this.worldX && gp.obj[i].worldX >= this.worldX - 48) {
-						gp.obj[i].worldX = this.worldX - 48;
+					if (gp.obj[i].worldX >= this.worldX && gp.obj[i].worldX <= this.worldX + 48
+							&& (gp.obj[i].direction.compareTo("left") == 0 || gp.obj[i].direction == "")) {
+						gp.obj[i].collisionOn = this.collisionOn;
+						gp.obj[i].collisionOnY = this.collisionOnY;
+						if(gp.obj[i].direction.compareTo(this.direction) != 0) gp.obj[i].worldX = this.worldX + 48;
+					} else if (gp.obj[i].worldX <= this.worldX && gp.obj[i].worldX >= this.worldX - 48 
+							&& (gp.obj[i].direction.compareTo("right") == 0 || gp.obj[i].direction == "")) {
+						gp.obj[i].collisionOn = this.collisionOn;
+						gp.obj[i].collisionOnY = this.collisionOnY;
+						if(gp.obj[i].direction.compareTo(this.direction) != 0) gp.obj[i].worldX = this.worldX - 48;
+
 					}
 				}
 			}

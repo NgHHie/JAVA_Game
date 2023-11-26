@@ -45,7 +45,7 @@ public class PauseOverlay {
 		}
 		
 		//250
-		info_button = new PauseButton(x1 + 168, y1 + 240, 131, 50, "/ui/about_us.png");
+		info_button = new PauseButton(x1 + 162, y1 + 240, 131, 50, "/ui/about_us.png");
 		story_button = new PauseButton(x1 , y1 + 240, 100, 50, "/ui/story_button.png");
 		sound_button_on = new PauseButton(x1 + 360, y1 + 240, 100, 50, "/ui/mute.png");
 		sound_button_off = new PauseButton(x1 + 360, y1 + 240, 100, 50, "/ui/mute_x.png");

@@ -29,6 +29,7 @@ public class SuperObject {
 
 	public boolean collisionOn, collisionOnY, onGround, inAir;
 	public float speedY;
+	public boolean[] collisionOn2 = new boolean[20];
 	
 	public SuperObject(GamePanel gp) {
 		this.gp = gp;

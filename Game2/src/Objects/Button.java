@@ -48,11 +48,10 @@ public class Button extends SuperObject{
 		if(gp.player != null) {
 			 this.collision = checkCollision(gp.player);
 			 if(this.collision == true) {
-//				 if(checkSound == false) {
-//					 gp.playSE(4, 1);
-//					 gp.soundEffect.get(4).setVolumn(1);
-//					 checkSound = true;
-//				 }
+					 if(checkSound == false) {
+						 gp.playSE(4, 1);
+						 checkSound = true;
+					 }
 				 return true;
 			 }
 			
@@ -63,10 +62,10 @@ public class Button extends SuperObject{
 			if(gp.clone[i] != null) {
 				 this.collision = checkCollision(gp.clone[i]);
 				 if(this.collision == true) {
-//					 if(checkSound == false) {
-//						 gp.playSE(4, 1);
-//						 checkSound = true;
-//					 }
+					 if(checkSound == false) {
+						 gp.playSE(4, 1);
+						 checkSound = true;
+					 }
 					 
 					 return true;
 				 }
@@ -74,10 +73,10 @@ public class Button extends SuperObject{
 			}
 		}
 		this.collision = false;
-//		if(checkSound == true) {
-//			checkSound = false;
-//			gp.stopSoundEffect(4);;
-//		}
+		if(checkSound == true) {
+			checkSound = false;
+			gp.stopSoundEffect(4);
+		}
 		
 		
 		return false;
