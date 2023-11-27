@@ -37,7 +37,7 @@ public class AssetSetter {
 		case 2:
 			setObject(gp.level);
 			
-			int x2 = 3 * gp.tileSize + 1;
+			int x2 = 13 * gp.tileSize + 1;
 			int y2 = 3 * gp.tileSize - 1;
 			setEntity(x2, y2);
 			break;
@@ -47,8 +47,8 @@ public class AssetSetter {
 			break;
 		case 4: 
 			setObject(gp.level);
-			 x = 10 * gp.tileSize + 1;
-			 y = 10 * gp.tileSize - 1;
+			 x = 12 * gp.tileSize + 1;
+			 y = 7 * gp.tileSize - 1;
 			setEntity(x, y);
 			break;
 		case 5:
@@ -60,7 +60,7 @@ public class AssetSetter {
 			break;
 		case 6:
 			setObject(gp.level);
-			setEntity(120, 150);
+			setEntity(100, 200);
 			break;
 		case 7:
 			setObject(gp.level);
@@ -217,9 +217,9 @@ public class AssetSetter {
 			gp.obj[11].worldX = 19 * gp.tileSize;
 			gp.obj[11].worldY = 3 * gp.tileSize;
 			
-			gp.obj[12] = new Thorn(gp);
-			gp.obj[12].worldX = 20 * gp.tileSize;
-			gp.obj[12].worldY = 3 * gp.tileSize;
+//			gp.obj[12] = new Thorn(gp);
+//			gp.obj[12].worldX = 20 * gp.tileSize;
+//			gp.obj[12].worldY = 3 * gp.tileSize;
 			
 			gp.obj[13] = new Door(gp);
 			gp.obj[13].worldX = 21 * gp.tileSize;
@@ -336,8 +336,8 @@ public class AssetSetter {
 
 			//thang cho button 3
 			gp.obj[8] = new Elevator(gp, (Button)gp.obj[5]);
-			gp.obj[8].worldX = 3 * gp.tileSize + 1;
-			gp.obj[8].worldY = 6 * gp.tileSize - 1;
+			gp.obj[8].worldX = 4 * gp.tileSize + 1;
+			gp.obj[8].worldY = 4 * gp.tileSize - 1;
 			gp.obj[8].defaultWorldX = gp.obj[8].worldX;
 			gp.obj[8].defaultWorldY = gp.obj[8].worldY;
 			gp.obj[8].setElevator((Elevator)gp.obj[8], "ver", 3);
