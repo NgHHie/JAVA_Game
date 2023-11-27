@@ -54,9 +54,9 @@ public class GamePanel extends JPanel implements Runnable{
 	private CheckDead checkDead = new CheckDead(this);
 	public Player player = new Player(this, keyH);
 	public Clone[] clone = new Clone[5];
-	public SuperObject obj[] = new SuperObject[20];
-	public String[][] movXClone = new String[5][600];
-	public String[][] movYClone = new String[5][600];
+	public SuperObject obj[] = new SuperObject[40];
+	public String[][] movXClone = new String[5][600000];
+	public String[][] movYClone = new String[5][600000];
 
 	//User Data
 	public int dataLevel[] = new int[10];
@@ -87,9 +87,10 @@ public class GamePanel extends JPanel implements Runnable{
 	public int xNext1 = screenWidth/2, xNext2 = screenWidth;
 	public int indexForDieText = 0;
 	//Sound
-	private Sound backgroundMusic = new Sound();
+	public boolean soundOn;
+	private Sound backgroundMusic = new Sound(this);
 	public ArrayList<Sound> soundEffect = new ArrayList<>();  
-	public boolean soundOn = true;
+//	public boolean soundOn = true;
 		
 	
 	
@@ -124,81 +125,62 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		//new
 		for(int i  = 0; i< 5; i++) {
-			soundEffect.add(new Sound());
+			soundEffect.add(new Sound(this));
 			soundEffect.get(i).setFile(i+ 1);
 			checkSound[i] = true;
 		}
-		
-		
-
+		soundOn = true;
+		playMusic(0);
 	}
 	
 private void addEffect() {
 	try {
-		
 		raineffect[0] = ImageIO.read(getClass().getResourceAsStream("/ui/rain1.png"));
-
 	} catch (IOException e) {
 		e.printStackTrace();
 	}
 	
-	try {
-		
+	try {	
 		raineffect[1] = ImageIO.read(getClass().getResourceAsStream("/ui/rain2.png"));
-
 	} catch (IOException e) {
 		e.printStackTrace();
 	}
 
 	try {
-	
 		raineffect[2] = ImageIO.read(getClass().getResourceAsStream("/ui/rain3.png"));
-
 	} catch (IOException e) {
 		e.printStackTrace();
 	}
-	try {
 	
+	try {
 		raineffect[3] = ImageIO.read(getClass().getResourceAsStream("/ui/rain4.png"));
-
 	} catch (IOException e) {
 		e.printStackTrace();
 	}
 	
 	try {
-		
 		raineffect[4] = ImageIO.read(getClass().getResourceAsStream("/ui/rain5.png"));
-
 	} catch (IOException e) {
 		e.printStackTrace();
 	}
 	
 	try {
-		
 		raineffect[5] = ImageIO.read(getClass().getResourceAsStream("/ui/rain6.png"));
-
 	} catch (IOException e) {
 		e.printStackTrace();
 	}
 	
-	try {
-		
+	try {	
 		raineffect[6] = ImageIO.read(getClass().getResourceAsStream("/ui/rain7.png"));
-
 	} catch (IOException e) {
 		e.printStackTrace();
 	}
 	
 	try {
-		
 		raineffect[7] = ImageIO.read(getClass().getResourceAsStream("/ui/rain8.png"));
-
 	} catch (IOException e) {
 		e.printStackTrace();
-	}
-	
-	
-		
+	}	
 }
 
 public void setupGameStart() {
@@ -230,13 +212,12 @@ public void setupGameStart() {
 		aSetter.set();
 		String path = "/maps/map" + String.format("%02d", i) + ".txt";
 		tileM.chooseMap(path);
-		
-		
+			
 		quantityClone = 0;
 		clone = new Clone[5];
 		
-		movXClone = new String[5][600];
-		movYClone = new String[5][600];
+		movXClone = new String[5][600000];
+		movYClone = new String[5][600000];
 		
 		//NEW
 		for(int j  = 0; j< 4; j++) {
@@ -244,7 +225,6 @@ public void setupGameStart() {
 		}
 		
 		gameState = playState;
-	
 		
 	}
 	
@@ -256,13 +236,12 @@ public void setupGameStart() {
 //		player.cnt = 0;
 		player = new Player(this, keyH);
 		aSetter.set();
-//		System.out.println(player.worldX + " " + player.worldY + " " + player.solidArea.x + " "+ player.solidArea.y + " ");
+		
 		quantityClone = 0;
 		clone = new Clone[5];
 		
-		movXClone = new String[5][600];
-		movYClone = new String[5][600];
-//		gameThread.sleep((long) 3000);
+		movXClone = new String[5][600000];
+		movYClone = new String[5][600000];
 			
 		gameState = playState;	
 	}
@@ -278,9 +257,8 @@ public void setupGameStart() {
 		double nextDrawTime = System.nanoTime() + drawInterval;
 		
 		while(gameThread != null) {
-			// 1 UPDATE: update in4 such as character positions
+			//update and repaint
 			update();
-			// 2 UPDATE: draw screen with the updated in4
 			repaint();
 				
 			try {
@@ -317,13 +295,12 @@ public void setupGameStart() {
 	
 	
 	public void update() {
-		
 		if(gameState == pauseState) {
 			po.update();
-			//nothing to do
 		}
 		
 		if(gameState == playState) {
+			if(player.reborn == true) return;
 //			System.out.println(player.worldX + " " + player.worldY + " " + player.solidArea.x + " "+ player.solidArea.y + " ");
 			for(int i=0; i<5; i++) upobj[i] = false;
 //			player.dead = checkDead.checkDeadPlayer(player);
@@ -363,8 +340,7 @@ public void setupGameStart() {
 						nextLevelEffect = true;
 		            }  
 		        }
-			}
-			
+			}	
 			
 			//dead
 			if(player.dead == true ) {
@@ -378,8 +354,10 @@ public void setupGameStart() {
 			
 			//chi phat am thanh lan dau
 			if(player.dead == true && checkSound[2]) {
-				playSE(2, 2);
-				checkSound[2] = false;
+				if(soundOn) {
+					playSE(2, 2);
+					checkSound[2] = false;
+				}
 			}
 		}
 		
@@ -393,8 +371,7 @@ public void setupGameStart() {
 		
 		Graphics2D g2 = (Graphics2D) g;
 		g2.drawImage(img, 0, 0, screenWidth, screenHeight, null);
-		
-		
+				
 		effectTick++;
 		if(effectTick >= effectSpeed) {
 			effectTick = 0;
@@ -409,11 +386,11 @@ public void setupGameStart() {
 		
 		tileM.draw(g2);
 		for(int i=0; i<obj.length; i++) {
-			if(obj[i] != null) {
+			if(obj[i] != null) {  
 				obj[i].draw(g2, this);
 			}
 		}
-		
+		if(player.reborn == false)
 		for(int i=0; i<5; i++) {
 			if(clone[i] != null) {
 				clone[i].draw(g2);
@@ -428,7 +405,7 @@ public void setupGameStart() {
 	//Sound
 	public void playMusic(int i) {
 		backgroundMusic.setFile(i);
-	    backgroundMusic.play();
+		backgroundMusic.play();
 	    backgroundMusic.setVolumn(1);
 	    
 	    backgroundMusic.loop();
@@ -437,10 +414,6 @@ public void setupGameStart() {
 	// Dừng nhạc nền
 	public void stopMusic() {
 	    backgroundMusic.stop();
-	    for(Sound x : soundEffect) {
-			x.setVolumn(0);;
-		}
-	  
 	}
 
 	// Phát âm thanh hiệu ứng
@@ -457,14 +430,15 @@ public void setupGameStart() {
 	    
 	public void switchMusic() {
 		if(soundOn) {
-			backgroundMusic.setVolumn(1);
+			backgroundMusic.play();
+			backgroundMusic.loop();
 			for(Sound x : soundEffect) {
 				x.setVolumn(1);
 			}
 		
 		}
 		else {
-			backgroundMusic.setVolumn(0);
+			backgroundMusic.stop();
 			for(Sound x : soundEffect) {
 				x.setVolumn(0);
 			}
@@ -474,9 +448,7 @@ public void setupGameStart() {
 	
 	public void stopSoundEffect(int i) {
 		soundEffect.get(i).setVolumn(0);;
-	}
-		
-		
+	}		
 
 	//User Data Update
 	public void updateAndCloseFile() {
@@ -489,9 +461,7 @@ public void setupGameStart() {
 //			        System.out.println(x);
 			        writer.println(x);
 			}
-
 //			System.out.println("OK ");
-
 			} catch (IOException e) {
 			   e.printStackTrace();
 		}        

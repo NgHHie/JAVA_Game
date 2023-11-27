@@ -49,8 +49,10 @@ public class Button extends SuperObject{
 			 this.collision = checkCollision(gp.player);
 			 if(this.collision == true) {
 					 if(checkSound == false) {
-						 gp.playSE(4, 1);
-						 checkSound = true;
+						 if(gp.soundOn) {
+							 gp.playSE(4, 1);
+							 checkSound = true;
+						 }
 					 }
 				 return true;
 			 }

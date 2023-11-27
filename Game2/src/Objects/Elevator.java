@@ -18,6 +18,11 @@ public class Elevator extends SuperObject {
 	protected boolean vertical; // doc
 	
 	private Button bt;
+	private int sizeofelevator;
+	
+	public void setSizeofelevator(int x) {
+		this.sizeofelevator = x;
+	}
 
 	public Elevator(GamePanel gp, Button bt) {
 		super(gp);
@@ -39,20 +44,11 @@ public class Elevator extends SuperObject {
 
 	public void update() {
 		this.minHeight = this.defaultWorldY;
-		this.maxHeight = this.defaultWorldY - 3 * gp.tileSize;
+		this.maxHeight = this.defaultWorldY - this.sizeofelevator * gp.tileSize;
 		this.minWidth = this.defaultWorldX;
-		this.maxWidth = this.defaultWorldX + 3 * gp.tileSize;
+		this.maxWidth = this.defaultWorldX + this.sizeofelevator * gp.tileSize;
 		Button tmp = bt;
 		if (tmp.put == true) {
-			
-			//sound
-//			if (this.vertical == true && this.worldY <= this.maxHeight) {
-//				gp.stopSoundEffect(4);
-//			}
-//			
-//			else if (this.horizontal == true && this.worldX >= this.maxWidth) {
-//				gp.stopSoundEffect(4);
-//			}
 						
 			if (this.vertical == true && this.worldY > this.maxHeight) {
 				

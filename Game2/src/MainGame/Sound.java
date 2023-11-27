@@ -11,61 +11,59 @@ public class Sound {
 	Clip clip;
 	URL soundURL[] = new URL[30];
 	FloatControl fc;
-	float volumn ; 
+	float volumn ;
+	GamePanel gp;
 	
-	public Sound() {
-//		soundURL[0] = getClass().getResource("/Sound/backsound.wav");
-		soundURL[0] = getClass().getResource("/Sound/backsound.wav");
-		soundURL[1] = getClass().getResource("/Sound/click.wav");
-		soundURL[2] = getClass().getResource("/Sound/jump.wav");
-		soundURL[3] = getClass().getResource("/Sound/gameover.wav");
-		soundURL[4] = getClass().getResource("/Sound/win.wav");
-		soundURL[5] = getClass().getResource("/Sound/cua_thang_may.wav");
+	public Sound(GamePanel gp) {
+		this.gp = gp;
+		soundURL[0] = getClass().getResource("/sound/backsound.wav");
+		soundURL[1] = getClass().getResource("/sound/click.wav");
+		soundURL[2] = getClass().getResource("/sound/jump.wav");
+		soundURL[3] = getClass().getResource("/sound/gameover.wav");
+		soundURL[4] = getClass().getResource("/sound/win.wav");	
+		soundURL[5] = getClass().getResource("/sound/cua_thang_may.wav");
 	}
 	
 	public void setFile(int i) {
 		try {
-			AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
-			clip = AudioSystem.getClip();
-			clip.open(ais);
-			fc = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-		}catch(Exception ex) {
-			
-		}
+            AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
+            clip = AudioSystem.getClip();
+            clip.open(ais);
+            fc = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        } catch (Exception ex) {
+ //       	ex.printStackTrace();
+            // Xử lý hoặc thông báo lỗi theo nhu cầu của bạn
+        }
 	}
 	
 	public void play() {
-		clip.start();
-		
-	}
+		if(gp.soundOn == true) clip.start();
+    }
 	
 	public void loop() {
-		clip.loop(Clip.LOOP_CONTINUOUSLY);
-		
-	}
-	
-	public void stop() {
-		
-		clip.stop();
+         clip.loop(Clip.LOOP_CONTINUOUSLY);
+    }
 
-	}
+    public void stop() {
+         clip.stop();
+
+    }
 	
-	public void setVolumn(int volumnScale) {
-		switch(volumnScale) {
-			case 0:
-				volumn = -80f;
-				break;
-			case 1:
-				volumn = -5f;
-				break;
-			case 2:
-				volumn = -20f;
-				break;
-				
-		}
-		
-		fc.setValue(volumn);
-	}
+    public void setVolumn(int volumnScale) {
+        switch (volumnScale) {
+            case 0:
+                volumn = -80f;
+                break;
+            case 1:
+                volumn = -5f;
+                break;
+            case 2:
+                volumn = -20f;
+                break;
+        }
+
+
+    }
 	
 	
 }

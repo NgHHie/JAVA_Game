@@ -36,8 +36,6 @@ public class UI {
 	private int timeSwitch = 0;
 
 
-    
-	
 	public BufferedImage GetSpriteAtlas(String path) {
 		BufferedImage img = null;
 		try {
@@ -248,28 +246,24 @@ public class UI {
 	}
 
 	private void drawPlayScreen(Graphics2D g2) {
-		
-		
-		
+	
 		//home_button
 		g2.setFont(boldFontBig);
 		g2.setColor(Color.WHITE);
 		playO.draw(g2);
 		
 		//img
-		BufferedImage img = GetSpriteAtlas("/ui/leveltext.png");
-		g2.drawImage(img, gp.tileSize * 2 , gp.tileSize * 1 - 40 , 230, 130, null);
+		BufferedImage img = GetSpriteAtlas("/ui/level_status_img.png");
+		g2.drawImage(img, gp.tileSize * 2 , gp.tileSize * 1 - 40 , 190*2/3, 126*2/3, null);
+
 		
 		//text_status
 		String text1 = String.format("%d", gp.level);
 		String text2 = "x" + String.format("%d", 5 - gp.quantityClone );
 	
 		
-		g2.drawString(text1,  gp.tileSize * 5 - 25,  gp.tileSize * 2 - 7);
-		g2.drawString(text2, gp.tileSize * 5 - 25, gp.tileSize * 2 + 23 );
-
-
-		
+		g2.drawString(text1, (gp.tileSize * 5 - 50), (gp.tileSize * 2 - 38));
+		g2.drawString(text2, (gp.tileSize * 5 - 66), (gp.tileSize * 2 - 18));
 		
 	}
 	

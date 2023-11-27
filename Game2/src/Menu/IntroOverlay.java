@@ -1,6 +1,7 @@
 package Menu;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.jar.Attributes.Name;
@@ -14,7 +15,8 @@ public class IntroOverlay {
     private GamePanel gp;
     private Timer timer;
     private BufferedImage introImage, nameImg;
-    private int index = -35;
+    private int index = -50;
+    public int effectSpeed = 5, effectTick, effectIndex;
  
     private boolean isTextVisible = true;
 
@@ -36,8 +38,8 @@ public class IntroOverlay {
     }
 
     private void loadImage() {
-        introImage = GetSpriteAtlas("/ui/white_background.jpg");
-//        nameImg = GetSpriteAtlas("/ui/name4.png");
+        introImage = GetSpriteAtlas("/ui/back2.png");
+        nameImg = GetSpriteAtlas("/ui/name.png");
        
     }
 
@@ -52,20 +54,39 @@ public class IntroOverlay {
     }
 
 
-    public void draw(Graphics g) {
-        String introText = "Nhấn phím bất kỳ để bắt đầu...";
-
+    public void draw(Graphics2D g) {
+    	BufferedImage img = GetSpriteAtlas("/ui/press_any_key.png");
         g.drawImage(introImage, 0, 0, gp.screenWidth, gp.screenHeight, null);
-        g.drawImage(nameImg, 2 * index, 180, 500, 65, null);
-        if(index < 170) {
+        g.drawImage(nameImg,160 , 2 * index, 900, 255, null);
+        if(index < 90) {
         	index +=3;
         }
+        if(index > 60){
+        	drawRain(g);
+        }
         if (isTextVisible) {
-            g.drawString(introText, gp.tileSize * 9, gp.screenHeight - 100);
+        	g.drawImage(img, gp.tileSize * 8 - 40, gp.screenHeight - 150, 500, 40, null);
         }
     }
+    
+    
 
-    public void anyKeyPressed() {
+    private void drawRain(Graphics2D g2) {
+    	effectTick++;
+		if(effectTick >= effectSpeed) {
+			effectTick = 0;
+			effectIndex ++;
+		}
+		
+		if(effectIndex >= 8) {
+			effectIndex = 0;
+		}
+		
+		g2.drawImage(gp.raineffect[effectIndex], 0, 0, gp.screenWidth, gp.screenHeight, null);
+		
+	}
+
+	public void anyKeyPressed() {
         gp.gameState = gp.pauseState;
         timer.stop(); // Dừng Timer khi có bất kỳ phím nào được nhấn
     }

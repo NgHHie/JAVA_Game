@@ -9,7 +9,6 @@ import Menu.PlayOverlay;
 
 public class MouseHandler implements MouseListener, MouseMotionListener{
 	
-	
 	GamePanel gp;
 	PauseOverlay op ;
 	PlayOverlay playO;
@@ -45,19 +44,16 @@ public class MouseHandler implements MouseListener, MouseMotionListener{
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if(gp.soundOn) {
-			gp.playSE(0, 1);
-		}
+		if(gp.soundOn) gp.playSE(0, 1);
 		
 		if(gp.gameState == gp.pauseState) {
-			System.out.print("click");
+//			System.out.print("click");
 			op.mousePressed(e);
 			
 		}
 		else if(gp.gameState == gp.playState){
 			playO.mousePressed(e);
 		}
-
 	}
 	
 	

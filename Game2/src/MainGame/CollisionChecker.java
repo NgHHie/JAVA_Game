@@ -117,7 +117,8 @@ public class CollisionChecker {
 					case "down":
 						entity.solidArea.y += entity.speedY;
 						if (entity.solidArea.intersects(gp.obj[i].solidArea)
-								&& entity.worldY <= gp.obj[i].worldY - gp.obj[i].solidArea.height) {
+								&& entity.worldY <= gp.obj[i].worldY - gp.obj[i].solidArea.height
+								&& gp.obj[i].name.compareTo("Thorn") != 0) {
 //						 entity.worldY = gp.obj[i].worldY - 48;
 							entity.speedY = 1;
 							entity.collisionOnY = true;

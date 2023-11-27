@@ -19,19 +19,14 @@ public class Player extends Entity {
 	public int cnt;
 	private int[] st = new int[5];
 
-//	public final float screenX, screenY;
-
 	public Player(GamePanel gp, KeyHandler keyH) {
 		super(gp);
-//		this.worldX = worldDefaultX;
-//		this.worldY = worldDefaultY;
 		this.name = "Player";
 		this.keyH = keyH;
 		this.admit = 0;
 		this.cnt = 0;
 		this.dead = false;
-		this.aniTick = 0;
-		this.aniIndex = 0;
+		this.reborn = true;
 
 		getPlayerImages();
 	}
@@ -41,8 +36,8 @@ public class Player extends Entity {
 			imageidle = ImageIO.read(getClass().getResourceAsStream("/player/Idle.png"));
 			imageleft = ImageIO.read(getClass().getResourceAsStream("/player/RunLeft.png"));
 			imageright = ImageIO.read(getClass().getResourceAsStream("/player/Run.png"));
-//			imageup = ImageIO.read(getClass().getResourceAsStream("/player/Up.png"));
 			imagedead = ImageIO.read(getClass().getResourceAsStream("/player/Dead.png"));
+			imageborn = ImageIO.read(getClass().getResourceAsStream("/player/ReBorn.png"));
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -73,9 +68,16 @@ public class Player extends Entity {
 			imgdead[i] = imagedead.getSubimage(i*128 + 28, 128 - 70, 70, 70);
 			animation[3][i] = imgdead[i];
 		}
+		
+		imgborn = new BufferedImage[8]; 
+		for(int i=0; i<imgleft.length; i++) {
+			imgborn[i] = imageborn.getSubimage(i*128 + 28, 128 - 70, 70, 70);
+			animation[4][i] = imgborn[i];
+		}
 	}
 
 	public void update() {
+		if(reborn == true) return;
 		if(dead == true) {
 			Arrays.fill(collisionOn2, false);
 			direction = "";
@@ -90,7 +92,7 @@ public class Player extends Entity {
 					collisionOn = false;
 					Arrays.fill(collisionOn2, false);
 					callClone();
-					st[cnt - 1] = 600;
+					st[cnt - 1] = 600000;
 					admit = 30;
 				}
 			} else if (admit > 0)
@@ -126,7 +128,7 @@ public class Player extends Entity {
 				direction = "right";
 			}
 	
-			if (cnt < 5 && st[cnt] < 600) {
+			if (cnt < 5 && st[cnt] < 600000) {
 				gp.movXClone[cnt][st[cnt]] = direction;
 				gp.movYClone[cnt][st[cnt]] = directionY;
 				st[cnt]++;
@@ -135,8 +137,6 @@ public class Player extends Entity {
 		// CHECK TILE COLLISION
 		collisionOn = false;
 		collisionOnY = false;
-//		gp.cChecker.checkTile(this);
-//		System.out.println(collisionOn);
 
 		// CHECK OBJECT COLLISIOn
 		gp.cChecker.checkObject(this);
@@ -178,19 +178,23 @@ public class Player extends Entity {
 
 	private void jump() {
 		if (inAir == true) return;
-		gp.playSE(1, 2);
+		if(gp.soundOn) gp.playSE(1, 2);
+		
 		inAir = true;
 		onGround = false;
 		speedY = -13;
 	}
 
 	private void callClone() {
-		
+		reborn = true;
+		aniIndex = 0;
+		aniTick = 0;
+		aniSpeed = 5;
 		if (gp.quantityClone < 5) {
 			gp.quantityClone++;
 			gp.clone[gp.quantityClone - 1] = new Clone(gp);
 		}
-//		setDefaultValues();
+		setDefaultValues();
 		gp.aSetter.set();
 		for (int i = 0; i < 5; i++) {
 			if (gp.clone[i] != null && gp.clone[i].dead == false) {

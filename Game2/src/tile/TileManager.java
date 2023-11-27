@@ -40,9 +40,9 @@ public class TileManager {
 			tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall.png"));
 			tile[1].collision = true;
 
-			tile[2] = new Tile();
-			tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water.png"));
-			tile[2].collision = true;
+//			tile[2] = new Tile();
+//			tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water.png"));
+//			tile[2].collision = true;
 
 			tile[3] = new Tile();
 			tile[3].name = "Player";

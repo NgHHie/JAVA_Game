@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
@@ -36,7 +37,6 @@ public class Clone extends Entity{
 			imageidle = ImageIO.read(getClass().getResourceAsStream("/player/clone_idle.png"));
 			imageleft = ImageIO.read(getClass().getResourceAsStream("/player/clone_run_left.png"));
 			imageright = ImageIO.read(getClass().getResourceAsStream("/player/clone_run.png"));
-//			imageup = ImageIO.read(getClass().getResourceAsStream("/player/Up.png"));
 			imagedead = ImageIO.read(getClass().getResourceAsStream("/player/clone_dead.png"));
 
 		} catch (IOException e) {
@@ -71,28 +71,33 @@ public class Clone extends Entity{
 	}
 	
 	public void update() {
-		
-		if(st < 600 && gp.movXClone[gp.stt][st] != null) {
-			direction = gp.movXClone[gp.stt][st];
-			directionY = gp.movYClone[gp.stt][st];
-			st ++;
+		if(dead == true) {
+			Arrays.fill(collisionOn2, false);
+			direction = "";
+//			return;
 		}
 		else {
-			direction = "";
-			directionY = "down";
+			if(st < 600000 && gp.movXClone[gp.stt][st] != null) {
+				direction = gp.movXClone[gp.stt][st];
+				directionY = gp.movYClone[gp.stt][st];
+				st ++;
+			}
+			else {
+				direction = "";
+				directionY = "down";
+			}
+			
+			if(inAir == false && directionY.compareTo("up") == 0) {
+				inAir = true;
+				onGround = false;
+				speedY = -13;
+			}
+			
+			if(speedY < 0) {
+				directionY = "up";
+			}
+			else if(speedY > 0) directionY = "down";
 		}
-		
-		if(inAir == false && directionY.compareTo("up") == 0) {
-			inAir = true;
-			onGround = false;
-			speedY = -13;
-		}
-		
-		if(speedY < 0) {
-			directionY = "up";
-		}
-		else if(speedY > 0) directionY = "down";
-		
 		//CHECK TILE COLLISION
 		collisionOn = false;
 		collisionOnY = false;
@@ -128,16 +133,7 @@ public class Clone extends Entity{
 		}
 		else speed = 5;
 		
-		spriteCounter ++;
-		if(spriteCounter > 8) {
-			if(spriteNum == 1) {
-				spriteNum = 2;
-			}
-			else if(spriteNum == 2) {
-				spriteNum = 1;
-			}
-			spriteCounter = 0;
-		}
+
 		if(inAir) {
 			speedY += 0.75;
 		}

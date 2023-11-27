@@ -22,42 +22,19 @@ public class Door extends SuperObject{
 		this.tang = 1;
 		this.giam = 0;
 		try {
-			this.image0 = ImageIO.read(getClass().getResourceAsStream("/object/door.png"));
-			
+			this.image0 = ImageIO.read(getClass().getResourceAsStream("/object/doorlock1.png"));
+
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
 		try {
-			this.image1 = ImageIO.read(getClass().getResourceAsStream("/object/door1.png"));
+			this.image1 = ImageIO.read(getClass().getResourceAsStream("/object/doorlock2.png"));
 			
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
-		try {
-			this.image2 = ImageIO.read(getClass().getResourceAsStream("/object/door2.png"));
-			
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.image3 = ImageIO.read(getClass().getResourceAsStream("/object/door3.png"));
-			
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.image4 = ImageIO.read(getClass().getResourceAsStream("/object/door4.png"));
-			
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.image5 = ImageIO.read(getClass().getResourceAsStream("/object/door5.png"));
-			
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		this.solidArea = new Rectangle(0, 0, 96, 96);
+		
+		this.solidArea = new Rectangle(0, 0, 74, 96);
 		this.solidAreaDefaultX = this.solidArea.x;
 		this.solidAreaDefaultY = this.solidArea.y;
 	}
@@ -71,15 +48,15 @@ public class Door extends SuperObject{
 		if(cnt < 10)
 			this.image = image0;
 		else if(cnt < 20)
-			this.image = image1;
+			this.image = image0;
 		else if(cnt < 30)
-			this.image = image2;
+			this.image = image1;
 		else if(cnt < 40)
-			this.image = image3;
+			this.image = image1;
 		else if(cnt < 50)
-			this.image = image4;
+			this.image = image1;
 		else if(cnt < 60)
-			this.image = image5;
+			this.image = image1;
 
 		if(cnt == 60) {
 			tang = 0;

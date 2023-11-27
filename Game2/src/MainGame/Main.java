@@ -34,8 +34,6 @@ public class Main {
 
 		//NEW
 		gamePanel.setupGameStart();
-		gamePanel.soundOn = true;
-		gamePanel.playMusic(0);
 		gamePanel.startGameThread();
 		
 	}

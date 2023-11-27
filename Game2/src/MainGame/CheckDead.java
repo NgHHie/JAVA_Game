@@ -36,16 +36,15 @@ public class CheckDead {
 		for(int i=0; i<20; i++) {
 			if(gp.obj[i] != null && gp.obj[i].name.compareTo("Thorn") == 0) {
 				Objects.Thorn tmp = (Objects.Thorn)gp.obj[i];
-				boolean check = tmp.checkCollisionPlayer();
+				boolean check = tmp.checkCollisionPlayer(player);
 				if(check == true) {
-					System.out.println("gai");
+//					System.out.println("gai");
 					return check;
 				}
 			}
 		}
 	
 		//check giữa thùng và tile 
-		
 		int entityLeftWorldX = player.worldX + player.solidArea.x + player.solidArea.width / 2;
 		int entityTopWorldY = player.worldY + player.solidArea.y;
 		int entityBottomWorldY = player.worldY + player.solidArea.y + player.solidArea.height;
@@ -54,15 +53,13 @@ public class CheckDead {
 		int entityTopRow = entityTopWorldY / gp.tileSize;
 		int entityBottomRow = entityBottomWorldY / gp.tileSize;
 		
-		if(entityLeftCol >=0 || entityTopRow >= 0 || entityBottomRow < gp.maxScreenRow) {
+		if(entityLeftCol >=0 && entityTopRow >= 0 && entityBottomRow < gp.maxScreenRow) {
 			int tileNum1, tileNum2;
 			tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityTopRow];
 			tileNum2 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];
 			if (gp.tileM.tile[tileNum1].collision == true || gp.tileM.tile[tileNum2].collision == true
 					|| player.name.compareTo(gp.tileM.tile[tileNum1].name) == 0
 					|| player.name.compareTo(gp.tileM.tile[tileNum2].name) == 0) {
-//				System.out.println(gp.player.worldX + " " + gp.player.worldY + " " + gp.player.solidArea.x + " "+ gp.player.solidArea.y + " ");
-				System.out.println("thung va tile");
 				return true;
 			}
 		}

@@ -20,7 +20,7 @@ public class Thorn extends SuperObject {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		this.solidArea = new Rectangle(0, 0, 48, 48);
+		this.solidArea = new Rectangle(0, 20, 48, 28);
 		this.solidAreaDefaultX = this.solidArea.x;
 		this.solidAreaDefaultY = this.solidArea.y;
 	}
@@ -30,23 +30,15 @@ public class Thorn extends SuperObject {
 	}
 
 	
-	public boolean checkCollisionPlayer() {
-		if (gp.player != null) {
-			this.collision = checkCollision(gp.player);
+	public boolean checkCollisionPlayer(Entity player) {
+		if (player != null) {
+			this.collision = checkCollision(player);
 			if (this.collision == true) {
-				gp.player.dead = true;
-				return gp.player.dead;
+				player.dead = true;
+				return player.dead;
 			}
 		}
-		for (int i = 0; i < 5; i++) {
-			if (gp.clone[i] != null) {
-				this.collision = checkCollision(gp.clone[i]);
-				if (this.collision == true) {
-					gp.clone[i].dead = true;
-					return gp.player.dead;
-				}
-			}
-		}
+
 		this.collision = false;
 		return false;
 	}

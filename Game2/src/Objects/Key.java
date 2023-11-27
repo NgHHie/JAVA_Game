@@ -18,7 +18,7 @@ public class Key extends SuperObject {
 		this.speedY = 1;
 		this.name = "Key";
 		try {
-			this.image = ImageIO.read(getClass().getResourceAsStream("/object/scibox.png"));
+			this.image = ImageIO.read(getClass().getResourceAsStream("/object/key.png"));
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -125,18 +125,7 @@ public class Key extends SuperObject {
 			}
 		}
 
-//		for (int i = 0; i <= 1; i++) {
-//			if (gp.obj[i] != null && i != gp.sttobj && this.inAir == false) {
-//				if (gp.obj[i].worldY >= this.worldY - 40 && gp.obj[i].worldY <= this.worldY + 40) {
-////				if(gp.obj[i].worldY == gp.obj[k].worldY ) {
-//					if (gp.obj[i].worldX >= this.worldX && gp.obj[i].worldX <= this.worldX + 48) {
-//						gp.obj[i].worldX = this.worldX + 48;
-//					} else if (gp.obj[i].worldX <= this.worldX && gp.obj[i].worldX >= this.worldX - 48) {
-//						gp.obj[i].worldX = this.worldX - 48;
-//					}
-//				}
-//			}
-//		}
+
 		
 		for (int i = 0; i <= 1; i++) {
 			if (gp.obj[i] != null && i != gp.sttobj && this.inAir == false) {
