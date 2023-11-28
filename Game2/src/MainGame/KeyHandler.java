@@ -53,8 +53,11 @@ public class KeyHandler implements KeyListener {
 		}
 		
 		if(code == KeyEvent.VK_R) {
-			gp.gameState = gp.pauseState;
-			gp.setupGameWithoutPause();
+			if(!gp.shadingOn && !gp.nextLevelEffect && gp.isPlayerAlive) {
+				gp.gameState = gp.pauseState;
+				gp.setupGameWithoutPause();
+			}
+			
 			
 		}
 		
