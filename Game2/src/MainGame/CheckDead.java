@@ -33,7 +33,7 @@ public class CheckDead {
 		}
 		
 		//check đâm vào gai
-		for(int i=0; i<20; i++) {
+		for(int i=0; i<40; i++) {
 			if(gp.obj[i] != null && gp.obj[i].name.compareTo("Thorn") == 0) {
 				Objects.Thorn tmp = (Objects.Thorn)gp.obj[i];
 				boolean check = tmp.checkCollisionPlayer(player);

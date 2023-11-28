@@ -55,7 +55,7 @@ public class AssetSetter {
 			setObject(gp.level);
 			
 			x = 22 * gp.tileSize;
-			y = 2 * gp.tileSize - 1;
+			y = 5 * gp.tileSize - 1;
 			setEntity(x, y);
 			break;
 		case 6:
@@ -70,7 +70,7 @@ public class AssetSetter {
 			setObject(gp.level);
 			
 			 x = 15 * gp.tileSize + 1;
-			 y = 1 * gp.tileSize - 1;
+			 y = 3 * gp.tileSize - 1;
 			setEntity(x, y);
 			break;
 		
@@ -272,22 +272,22 @@ public class AssetSetter {
 			} 
 
 			
-			gp.obj[1] = new Key(gp);
-			gp.obj[1].worldX = 19 * gp.tileSize;
-			gp.obj[1].worldY = 7 * gp.tileSize;
+			gp.obj[0] = new Key(gp);
+			gp.obj[0].worldX = 21 * gp.tileSize;
+			gp.obj[0].worldY = 7 * gp.tileSize;
                         
-            gp.obj[2] = new Key(gp);
-			gp.obj[2].worldX = 19 * gp.tileSize;
-			gp.obj[2].worldY = 7 * gp.tileSize;
-            gp.obj[0] = new Button(gp);
-			gp.obj[0].worldX = 6 * gp.tileSize;
-			gp.obj[0].worldY = 12 * gp.tileSize;
+            gp.obj[1] = new Key(gp);
+			gp.obj[1].worldX = 21 * gp.tileSize;
+			gp.obj[1].worldY = 6 * gp.tileSize;
+            gp.obj[2] = new Button(gp);
+			gp.obj[2].worldX = 6 * gp.tileSize;
+			gp.obj[2].worldY = 12 * gp.tileSize;
 
-            gp.obj[3] = new Elevator(gp, (Button)gp.obj[0]);
+            gp.obj[3] = new Elevator(gp, (Button)gp.obj[2]);
 			gp.obj[3].worldX = 13 * gp.tileSize + 1;
-			gp.obj[3].worldY = 8 * gp.tileSize - 1;
-			gp.obj[3].defaultWorldX = gp.obj[0].worldX + 7 * gp.tileSize;
-			gp.obj[3].defaultWorldY = gp.obj[0].worldY;
+			gp.obj[3].worldY = 7 * gp.tileSize - 1;
+			gp.obj[3].defaultWorldX = gp.obj[3].worldX;// + 7 * gp.tileSize;
+			gp.obj[3].defaultWorldY = gp.obj[3].worldY;
 			gp.obj[3].setElevator((Elevator)gp.obj[3], "hor", 3);
                         
 			gp.obj[4] = new Door(gp);
@@ -298,9 +298,9 @@ public class AssetSetter {
             gp.obj[5].worldX = 11 * gp.tileSize + 1;
             gp.obj[5].worldY = 6 * gp.tileSize - 1;
 			
-            gp.obj[6] = new Thorn(gp);
-            gp.obj[6].worldX = 12 * gp.tileSize + 1;
-            gp.obj[6].worldY = 6 * gp.tileSize - 1;
+//            gp.obj[6] = new Thorn(gp);
+//            gp.obj[6].worldX = 12 * gp.tileSize + 1;
+//            gp.obj[6].worldY = 6 * gp.tileSize - 1;
 			
             gp.obj[7] = new Thorn(gp);
             gp.obj[7].worldX = 10 * gp.tileSize + 1;
@@ -320,7 +320,7 @@ public class AssetSetter {
                         
             gp.obj[11] = new Thorn(gp);
             gp.obj[11].worldX = 8 * gp.tileSize + 1;
-            gp.obj[11].worldY = 11 * gp.tileSize - 1;
+            gp.obj[11].worldY = 10 * gp.tileSize - 1;
             break;
 			// hoan thanh khong chinh sua
 		case 6:
@@ -336,11 +336,11 @@ public class AssetSetter {
 
 			//thang cho button 3
 			gp.obj[8] = new Elevator(gp, (Button)gp.obj[5]);
-			gp.obj[8].worldX = 4 * gp.tileSize + 1;
-			gp.obj[8].worldY = 4 * gp.tileSize - 1;
+			gp.obj[8].worldX = 6 * gp.tileSize + 1;
+			gp.obj[8].worldY = 5 * gp.tileSize - 1;
 			gp.obj[8].defaultWorldX = gp.obj[8].worldX;
 			gp.obj[8].defaultWorldY = gp.obj[8].worldY;
-			gp.obj[8].setElevator((Elevator)gp.obj[8], "ver", 3);
+			gp.obj[8].setElevator((Elevator)gp.obj[8], "ver", 2);
 			
 			gp.obj[9] = new Thorn(gp);
 			gp.obj[9].worldX = 3 * gp.tileSize;
@@ -511,8 +511,8 @@ public class AssetSetter {
 				gp.obj[i] = null;
 			//key 
 			gp.obj[0] = new Key(gp);
-			gp.obj[0].worldX = 5 * gp.tileSize;
-			gp.obj[0].worldY = 13 * gp.tileSize;
+			gp.obj[0].worldX = 3 * gp.tileSize + 5;
+			gp.obj[0].worldY = 13 * gp.tileSize - 1;
 			//thorn 1 ,2 ,3 
 			gp.obj[5] = new Thorn(gp);
 			gp.obj[5].worldX = 10 * gp.tileSize;
