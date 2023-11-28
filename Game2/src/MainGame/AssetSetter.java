@@ -564,7 +564,7 @@ public class AssetSetter {
 			gp.obj[12].worldY = 12 * gp.tileSize;
 			gp.obj[13] = new Thorn(gp);
 			gp.obj[13].worldX = 20 * gp.tileSize;
-			gp.obj[13].worldY = 10 * gp.tileSize;
+			gp.obj[13].worldY = 9 * gp.tileSize;
 			gp.obj[14] = new Thorn(gp);
 			gp.obj[14].worldX = 23 * gp.tileSize;
 			gp.obj[14].worldY = 13 * gp.tileSize;

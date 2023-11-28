@@ -79,7 +79,9 @@ public class GamePanel extends JPanel implements Runnable{
 	public boolean infoShow = false;
 	public boolean shadingOn = false;
 	public boolean nextLevelEffect = false;
+	public boolean winAllLevel = false;
 	public boolean isPlayerAlive = true;
+	public boolean isWinningEffect = false;
 	public boolean checkSound[] = new boolean[10];
 
 		//tr
@@ -295,11 +297,14 @@ public void setupGameStart() {
 	
 	
 	public void update() {
-		if(gameState == pauseState) {
+		if(winAllLevel) {
+			
+		}
+		else if(gameState == pauseState) {
+			winAllLevel = false;
 			po.update();
 		}
-		
-		if(gameState == playState) {
+		else if(gameState == playState) {
 			if(player.reborn == true) return;
 //			System.out.println(player.worldX + " " + player.worldY + " " + player.solidArea.x + " "+ player.solidArea.y + " ");
 			for(int i=0; i<5; i++) upobj[i] = false;
@@ -331,13 +336,20 @@ public void setupGameStart() {
 			}
 			//touch door to win
 			
-			for(int i = 0; i< 20 ;i++) {
+			for(int i = 0; i< 40 ;i++) {
 				if (obj[i] instanceof Door) {
 		            Door door = (Door) obj[i] ;
 		            if(door.getWinStatus() && !player.dead) {
-		            	dataLevel[(this.level + 1) % 10] = 1;
-//		            	this.ui.drawNextLevelEffect();
-						nextLevelEffect = true;
+		            	if(this.level != 9) {
+		            		dataLevel[this.level + 1] = 1;
+							nextLevelEffect = true;
+		            	}
+		            	else if (this.level == 9){
+		            		shadingOn = true;
+		            		winAllLevel = true;
+//		            		nextLevelEffect = true;
+		            	}
+		            	
 		            }  
 		        }
 			}	

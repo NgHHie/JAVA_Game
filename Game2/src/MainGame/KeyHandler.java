@@ -49,7 +49,13 @@ public class KeyHandler implements KeyListener {
 		if(code == KeyEvent.VK_ESCAPE) {
 			gp.infoShow = false;
 			gp.storyShow = false;
-			
+			if(gp.winAllLevel == true) {
+				
+				gp.isWinningEffect = false;
+				gp.winAllLevel = false;
+				gp.gameState = gp.pauseState;
+				
+			}
 		}
 		
 		if(code == KeyEvent.VK_R) {

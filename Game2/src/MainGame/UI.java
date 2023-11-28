@@ -30,8 +30,9 @@ public class UI {
 	public Font pixelFont_20, boldFont_20, pixelFont_14, boldFont_14, boldFontBig, pixelFontBig;
 	public boolean gameFinished = false;
 
-	public BufferedImage  infoImage;
+	public BufferedImage  infoImage, thankYouImg;
 	public boolean textVisiable = true;
+	public boolean isWinning = false;
 
 	private int timeSwitch = 0;
 
@@ -53,12 +54,12 @@ public class UI {
 		this.playO = new PlayOverlay(gp);
 		this.introO = new IntroOverlay(gp);
 		setTextFont();
-		
+		loadImg();
 		 
 	}
 	
 	private void loadImg() {
-		
+		 thankYouImg = GetSpriteAtlas("/ui/thankyou.png");
 	}
 	
 
@@ -110,6 +111,68 @@ public class UI {
 			drawDieText(g2);
 		}
 		
+		if(gp.isWinningEffect) {
+			drawWinning(g2);
+		}
+		
+	}
+	
+	private void drawSwitchSceen(Graphics2D g) {
+		BufferedImage image = GetSpriteAtlas("/ui/blackbackground.png") ;
+		if(timeSwitch == 0) {
+			if(gp.alpha >= 0.95f) {
+	        	timeSwitch ++;
+	        	if(gp.winAllLevel) {
+//	        		System.out.println("ok");
+	        		gp.isWinningEffect = true;
+	        	}
+	        	else if(gp.isPlayerAlive == false) {
+	        		gp.gameState = gp.pauseState;
+	        		
+//	        		gp.setupGame(gp.level);
+	        	}
+	        	else {
+	        		gp.setupGame(gp.level);
+	        		gp.gameState = gp.playState;
+	        	}
+	        	
+	        	
+	        }
+	        else {
+	        	gp.alpha += 0.05f;
+	        }
+		}
+		
+		if(timeSwitch == 1) {
+	
+			if(gp.alpha <= 0.05f) {
+	        	gp.shadingOn = false;
+	        	gp.alpha = 0f;
+	        	timeSwitch = 0;
+	        	gp.isPlayerAlive = true;
+	        	
+	        	
+	        }
+	        else {
+	        	gp.alpha -= 0.05f;
+	        }
+		}
+		
+		// Tạo một AlphaComposite với độ trong suốt đã cho
+        AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, gp.alpha);
+        
+        // Lưu trạng thái hiện tại của Graphics2D để khôi phục sau khi vẽ hình ảnh
+        Composite originalComposite = g.getComposite();
+
+        // Đặt AlphaComposite mới cho Graphics2D
+        g.setComposite(alphaComposite);
+
+        // Vẽ hình ảnh
+        g.drawImage(image, 0, 0, gp.screenWidth, gp.screenHeight, null);
+        
+        // Khôi phục trạng thái ban đầu của Graphics2D
+        g.setComposite(originalComposite);
+        
 	}
 	
 	private void drawStoryShow(Graphics2D g) {
@@ -171,56 +234,13 @@ public class UI {
 		this.g2.drawImage(img1, gp.xNext2, 0, gp.screenWidth, gp.screenHeight, null);
 	}
 
-	private void drawSwitchSceen(Graphics2D g) {
-		BufferedImage image = GetSpriteAtlas("/ui/blackbackground.png") ;
-		if(timeSwitch == 0) {
-			if(gp.alpha >= 0.95f) {
-	        	timeSwitch ++;
-	       
-	        	if(gp.isPlayerAlive == false) {
-	        		gp.gameState = gp.pauseState;
-	        		
-//	        		gp.setupGame(gp.level);
-	        	}
-	        	else {
-	        		gp.setupGame(gp.level);
-	        		gp.gameState = gp.playState;
-	        	}
-	        	
-	        	
-	        }
-	        else {
-	        	gp.alpha += 0.05f;
-	        }
-		}
-		
-		if(timeSwitch == 1) {
-			if(gp.alpha <= 0.05f) {
-	        	gp.shadingOn = false;
-	        	gp.alpha = 0f;
-	        	timeSwitch = 0;
-	        	gp.isPlayerAlive = true;
-	        }
-	        else {
-	        	gp.alpha -= 0.05f;
-	        }
-		}
-		
-		// Tạo một AlphaComposite với độ trong suốt đã cho
-        AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, gp.alpha);
-        
-        // Lưu trạng thái hiện tại của Graphics2D để khôi phục sau khi vẽ hình ảnh
-        Composite originalComposite = g.getComposite();
 
-        // Đặt AlphaComposite mới cho Graphics2D
-        g.setComposite(alphaComposite);
 
-        // Vẽ hình ảnh
-        g.drawImage(image, 0, 0, gp.screenWidth, gp.screenHeight, null);
-        
-        // Khôi phục trạng thái ban đầu của Graphics2D
-        g.setComposite(originalComposite);
-        
+	private void drawWinning(Graphics2D g) {
+		
+		g.drawImage(thankYouImg ,0, 0, gp.screenWidth, gp.screenHeight, null);
+
+		
 	}
 
 	private void drawIntro(Graphics2D g2) {
