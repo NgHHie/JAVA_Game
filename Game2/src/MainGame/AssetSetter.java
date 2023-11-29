@@ -74,8 +74,8 @@ public class AssetSetter {
 		
 		case 9:
 			setObject(gp.level);
-			x = 19 * gp.tileSize + 1;
-			y = 13 * gp.tileSize - 1;
+			x = 2 * gp.tileSize + 1;
+			y = 2 * gp.tileSize - 1;
 			setEntity(x, y);
 			
 			break;
