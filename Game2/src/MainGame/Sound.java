@@ -8,11 +8,11 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 
 public class Sound {
-	Clip clip;
-	URL soundURL[] = new URL[30];
-	FloatControl fc;
-	float volumn ;
-	GamePanel gp;
+	private Clip clip;
+	private URL soundURL[] = new URL[30];
+	private FloatControl fc;
+	private float volumn ;
+	private GamePanel gp;
 	
 	public Sound(GamePanel gp) {
 		this.gp = gp;

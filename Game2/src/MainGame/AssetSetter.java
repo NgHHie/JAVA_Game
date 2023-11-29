@@ -1,7 +1,5 @@
 package MainGame;
 
-
-
 import Objects.Button;
 import Objects.Door;
 import Objects.Elevator;
@@ -76,8 +74,8 @@ public class AssetSetter {
 		
 		case 9:
 			setObject(gp.level);
-			x = 2 * gp.tileSize + 1;
-			y = 1 * gp.tileSize - 1;
+			x = 19 * gp.tileSize + 1;
+			y = 13 * gp.tileSize - 1;
 			setEntity(x, y);
 			
 			break;
@@ -85,8 +83,6 @@ public class AssetSetter {
             
 	}
 	
-	
-	//0-4: key, 5-7: button, 8-10: elevator (ver; dọc, hor:ngang), 11...:thorn
 	private void setObject(int level) {
 		switch (level) {
 		case 0:

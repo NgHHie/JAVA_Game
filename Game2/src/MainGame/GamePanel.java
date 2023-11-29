@@ -31,8 +31,8 @@ public class GamePanel extends JPanel implements Runnable{
 	private final int scale = 3; //tăng kích cỡ 3 lần
 	
 	public final int tileSize = originalTileSize * scale;
-	public int maxScreenCol = 25 + 1; //có 25 cột (không phải 26 đâu)
-	public int maxScreenRow = 15; //có 15 hàng
+	public int maxScreenCol = 25 + 1; 
+	public int maxScreenRow = 15; 
 	public final int screenWidth = tileSize * (maxScreenCol - 1); 
 	public final int screenHeight = tileSize * maxScreenRow;
 
@@ -43,8 +43,9 @@ public class GamePanel extends JPanel implements Runnable{
 	public int quantityClone = 0;
 	
 	//FPS
-	int FPS = 60;
+	private static final int FPS = 60;
 	
+	//
 	public TileManager tileM = new TileManager(this);
 	public KeyHandler keyH = new KeyHandler(this);
 	public MouseHandler mouseH = new MouseHandler(this);
@@ -73,34 +74,31 @@ public class GamePanel extends JPanel implements Runnable{
 	public int gameState;
 	public  int playState = 1, pauseState = 2, inforState = 3, introState = 0;
 	
-		//status variable 
+	//status variable 
 	public boolean storyShow = false;
 	public boolean popUp = false;
 	public boolean infoShow = false;
 	public boolean shadingOn = false;
 	public boolean nextLevelEffect = false;
+	public boolean winAllLevel = false;
 	public boolean isPlayerAlive = true;
+	public boolean isWinningEffect = false;
 	public boolean checkSound[] = new boolean[10];
-
-		//tr
 	public float alpha = 0f;
 	public int xNext1 = screenWidth/2, xNext2 = screenWidth;
 	public int indexForDieText = 0;
+	
 	//Sound
 	public boolean soundOn;
 	private Sound backgroundMusic = new Sound(this);
 	public ArrayList<Sound> soundEffect = new ArrayList<>();  
-//	public boolean soundOn = true;
+
 		
-	
-	
-	
 	public BufferedImage img;
 	public BufferedImage[] raineffect;
 	public int effectSpeed = 5, effectTick, effectIndex;
 	
 
-	
 	public GamePanel() {
 		ui = new UI(this);
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -183,7 +181,7 @@ private void addEffect() {
 	}	
 }
 
-public void setupGameStart() {
+	public void setupGameStart() {
 		
 		String fileName = "data1.txt";
 
@@ -194,7 +192,7 @@ public void setupGameStart() {
         try (Scanner sc = new Scanner(new InputStreamReader(inputStream))) {
             for(int i = 0; i< 10; i++) {
             	dataLevel[i] = sc.nextInt();
-//            	System.out.println(dataLevel[i] + " ");
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -295,15 +293,17 @@ public void setupGameStart() {
 	
 	
 	public void update() {
-		if(gameState == pauseState) {
+		if(winAllLevel) {
+
+		}
+		else if(gameState == pauseState) {
+			winAllLevel = false;
 			po.update();
 		}
 		
-		if(gameState == playState) {
+		else if(gameState == playState) {
 			if(player.reborn == true) return;
-//			System.out.println(player.worldX + " " + player.worldY + " " + player.solidArea.x + " "+ player.solidArea.y + " ");
 			for(int i=0; i<5; i++) upobj[i] = false;
-//			player.dead = checkDead.checkDeadPlayer(player);
 			if(player != null) {
 				if(player.dead == false) {
 					player.dead = checkDead.checkDeadPlayer(player);
@@ -313,7 +313,6 @@ public void setupGameStart() {
 			}
 
 			for(int i=0; i<5; i++) {
-//				clone[i].dead = checkDead.checkDeadPlayer(clone[i]);
 				if(clone[i] != null) {
 					if(clone[i].dead == false) {
 						clone[i].dead = checkDead.checkDeadPlayer(clone[i]);
@@ -331,13 +330,20 @@ public void setupGameStart() {
 			}
 			//touch door to win
 			
-			for(int i = 0; i< 20 ;i++) {
+			for(int i = 0; i< 40 ;i++) {
 				if (obj[i] instanceof Door) {
 		            Door door = (Door) obj[i] ;
 		            if(door.getWinStatus() && !player.dead) {
-		            	dataLevel[(this.level + 1) % 10] = 1;
-//		            	this.ui.drawNextLevelEffect();
-						nextLevelEffect = true;
+		            	if(this.level != 9) {
+		            		dataLevel[this.level + 1] = 1;
+							nextLevelEffect = true;
+		            	}
+		            	else if (this.level == 9){
+		            		shadingOn = true;
+		            		winAllLevel = true;
+//		            		nextLevelEffect = true;
+		            	}
+
 		            }  
 		        }
 			}	
@@ -417,7 +423,6 @@ public void setupGameStart() {
 	}
 
 	// Phát âm thanh hiệu ứng
-	//e - click = 0 , jump = 1, die = 2, win = 3
 	public void playSE(int e, int i) {
 		soundEffect.get(e).setFile(e+1);
 		    
@@ -458,10 +463,9 @@ public void setupGameStart() {
 			PrintWriter writer = new PrintWriter(file)) {
 
 			for (int x : this.dataLevel) {
-//			        System.out.println(x);
 			        writer.println(x);
 			}
-//			System.out.println("OK ");
+
 			} catch (IOException e) {
 			   e.printStackTrace();
 		}        

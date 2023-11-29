@@ -8,7 +8,7 @@ import entity.Clone;
 
 public class KeyHandler implements KeyListener {
 	public boolean upPressed, downPressed, leftPressed, rightPressed, callClone;
-	GamePanel gp;
+	private GamePanel gp;
 	private IntroOverlay introO;
 	
 	public KeyHandler(GamePanel gp) {
@@ -19,7 +19,7 @@ public class KeyHandler implements KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 	}
-
+	//check keypressed
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(gp.gameState == gp.introState) {
@@ -50,25 +50,24 @@ public class KeyHandler implements KeyListener {
 			gp.infoShow = false;
 			gp.storyShow = false;
 			
+			if(gp.winAllLevel == true) {
+
+				gp.isWinningEffect = false;
+				gp.winAllLevel = false;
+				gp.gameState = gp.pauseState;
+
+			}
 		}
 		
 		if(code == KeyEvent.VK_R) {
-			gp.gameState = gp.pauseState;
-			gp.setupGameWithoutPause();
-			
-		}
-		
-		if(code == KeyEvent.VK_O) {
-			if(gp.gameState == gp.pauseState) {
-				gp.gameState = gp.playState;
-			}
-			else if(gp.gameState == gp.playState) 
+			if(!gp.shadingOn && !gp.nextLevelEffect && gp.isPlayerAlive) {
 				gp.gameState = gp.pauseState;
-			}	
-			
+				gp.setupGameWithoutPause();
+			}
+		}	
 		
 	}
-
+	//check keyreleased
 	@Override
 	public void keyReleased(KeyEvent e) {
 		//Khi nhả nút

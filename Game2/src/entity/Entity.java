@@ -8,6 +8,7 @@ import MainGame.GamePanel;
 
 public class Entity {
 	protected GamePanel gp;
+	
 	public String name;
 	public int worldX, worldY;
 	public float speed;
@@ -16,22 +17,17 @@ public class Entity {
 	public boolean moveObj;
 	public boolean onGround;
 	
-	public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
-	public BufferedImage[][] animation;
-	public BufferedImage[] imgidle, imgleft, imgright, imgup, imgdown, imgdead, imgborn;
-	public BufferedImage imageidle, imageleft, imageright, imageup, imagedown, imagedead, imageborn;
+	protected BufferedImage[][] animation;
+	protected BufferedImage[] imgidle, imgleft, imgright, imgup, imgdown, imgdead, imgborn;
+	protected BufferedImage imageidle, imageleft, imageright, imageup, imagedown, imagedead, imageborn;
 	public int anicondition, aniTick, aniIndex, aniSpeed = 5;
 	
 	public String direction;
 	public String directionY;
-	
-	protected int spriteCounter = 0;
-	protected int spriteNum = 1;
 	public Rectangle solidArea;
 	public boolean collisionOn = false;
 	public boolean collisionOnY = false;
 	public boolean[] collisionOn2 = new boolean[20];
-	
 	
 	public int solidAreaDefaultX, solidAreaDefaultY;
 	public int worldDefaultX;
@@ -42,9 +38,9 @@ public class Entity {
 	public Entity(GamePanel gp) {
 		this.gp = gp;
 		this.dead = false;
-		solidArea = new Rectangle(8, 16, 32, 32);
-		solidAreaDefaultX = solidArea.x;
-		solidAreaDefaultY = solidArea.y;
+		this.solidArea = new Rectangle(8, 16, 32, 32);
+		this.solidAreaDefaultX = solidArea.x;
+		this.solidAreaDefaultY = solidArea.y;
 		
 		setDefaultValues();
 	}

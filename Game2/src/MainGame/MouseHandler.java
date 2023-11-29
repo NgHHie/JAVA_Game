@@ -9,9 +9,9 @@ import Menu.PlayOverlay;
 
 public class MouseHandler implements MouseListener, MouseMotionListener{
 	
-	GamePanel gp;
-	PauseOverlay op ;
-	PlayOverlay playO;
+	private GamePanel gp;
+	private PauseOverlay op ;
+	private PlayOverlay playO;
 	
 	
 	public MouseHandler(GamePanel gp) {

@@ -12,20 +12,18 @@ import javax.imageio.ImageIO;
 import MainGame.GamePanel;
 
 
-
-
 public class PauseOverlay {
 	private GamePanel gp;
 	private BufferedImage backgroundImg, selectImg;
-	public LevelButton[] level_button;
+	private LevelButton[] level_button;
 	
-	public PauseButton info_button, story_button, sound_button_on, sound_button_off;
-	public Graphics2D g2;
-	public boolean check[] = new boolean[10];
+	private PauseButton info_button, story_button, sound_button_on, sound_button_off;
+	private Graphics2D g2;
+	private boolean check[] = new boolean[10];
 
 	public PauseOverlay(GamePanel gp) {
 		this.gp = gp;
-		level_button = new LevelButton[10];
+		this.level_button = new LevelButton[10];
 		loadBackground();
 		createUrmButtons();
 	}

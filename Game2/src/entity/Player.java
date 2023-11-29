@@ -16,8 +16,8 @@ import MainGame.KeyHandler;
 public class Player extends Entity {
 	private KeyHandler keyH;
 	private int admit;
-	public int cnt;
 	private int[] st = new int[5];
+	private int cnt;
 
 	public Player(GamePanel gp, KeyHandler keyH) {
 		super(gp);
@@ -87,7 +87,6 @@ public class Player extends Entity {
 		if(keyH != null) {
 			if (admit == 0) {
 				if (keyH.callClone == true && cnt < 5) {
-					
 					cnt++;
 					collisionOn = false;
 					Arrays.fill(collisionOn2, false);
@@ -100,14 +99,7 @@ public class Player extends Entity {
 	
 			if (keyH.leftPressed == false && keyH.rightPressed == false) {
 				direction = "";
-			} else {
-				if (keyH.leftPressed == false && keyH.rightPressed == false) {
-					if (direction == "right" || direction == "left") {
-						spriteNum = 1;
-					}
-					direction = "";
-				}
-			}
+			} 
 	
 			if (direction == null)
 				direction = "";
@@ -164,7 +156,8 @@ public class Player extends Entity {
 				break;
 			}
 		}
-		if (collisionOn2[0] == true || collisionOn2[1] == true || collisionOn2[2] == true || collisionOn2[3] == true
+		if (collisionOn2[0] == true || collisionOn2[1] == true 
+				|| collisionOn2[2] == true || collisionOn2[3] == true
 				|| collisionOn2[4] == true) {
 			if (speed < 4)
 				speed += 0.5;

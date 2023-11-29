@@ -11,8 +11,8 @@ import entity.Entity;
 
 public class Button extends SuperObject{
 	protected boolean put;
-	public boolean checkSound  = false;
-	BufferedImage img1 , img2;
+	private boolean checkSound  = false;
+	private BufferedImage img1 , img2;
 	
 	public Button(GamePanel gp) {
 		super(gp);

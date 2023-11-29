@@ -42,7 +42,8 @@ public class SuperObject {
 		if(this.name.compareTo("Thorn") == 0) {
 			g2.drawImage(image, screenX, screenY, 48, 48, null);
 		}
-		else g2.drawImage(image, screenX, screenY, this.solidArea.width, this.solidArea.height, null);
+		else g2.drawImage(image, screenX, screenY, 
+				this.solidArea.width, this.solidArea.height, null);
 	}
 
 	public void update() {
@@ -50,8 +51,6 @@ public class SuperObject {
 
 	}
 	
-	
-
 	public void setElevator(Elevator ele, String s, int x) {
 		ele.setSizeofelevator(x);
 		if (s.compareTo("hor") == 0)

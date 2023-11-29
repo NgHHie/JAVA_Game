@@ -14,12 +14,12 @@ import java.util.Random;
 public class LevelButton extends Button {
 	
 	private GamePanel gp;
-	public BufferedImage lvl_on[] = new BufferedImage[10] ;
-	public BufferedImage lvl_off[] = new BufferedImage[10] ;
-	public BufferedImage img1 ;
-	public BufferedImage img2;
-	public int rowIndex, index;
-	public boolean mouseOver , mousePressed  ;
+	private BufferedImage lvl_on[] = new BufferedImage[10] ;
+	private BufferedImage lvl_off[] = new BufferedImage[10] ;
+	private BufferedImage img1 ;
+	private BufferedImage img2;
+	private int rowIndex, index;
+	private boolean mouseOver , mousePressed ;
 
 	public LevelButton(int x, int y, int width, int height, int rowIndex, GamePanel gp) {
 		super(x, y, width, height);

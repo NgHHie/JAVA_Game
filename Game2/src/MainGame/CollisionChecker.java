@@ -119,7 +119,6 @@ public class CollisionChecker {
 						if (entity.solidArea.intersects(gp.obj[i].solidArea)
 								&& entity.worldY <= gp.obj[i].worldY - gp.obj[i].solidArea.height
 								&& gp.obj[i].name.compareTo("Thorn") != 0) {
-//						 entity.worldY = gp.obj[i].worldY - 48;
 							entity.speedY = 1;
 							entity.collisionOnY = true;
 							entity.inAir = false;
@@ -130,9 +129,7 @@ public class CollisionChecker {
 						entity.solidArea.y += entity.speedY;
 						if (entity.solidArea.intersects(gp.obj[i].solidArea)
 								&& entity.worldY >= gp.obj[i].worldY + gp.obj[i].solidArea.height - 16) {
-//						 entity.worldY = gp.obj[i].worldY - 48;
 							entity.speedY = 0;
-//							entity.direction = "down";
 							entity.collisionOnY = true;
 						}
 						break;
@@ -156,7 +153,6 @@ public class CollisionChecker {
 						gp.obj[i].direction = entity.direction;
 						gp.upobj[i] = true;
 						gp.obj[i].update();
-//						gp.upobj[i] = true;
 					}
 
 				}

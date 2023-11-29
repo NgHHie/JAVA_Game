@@ -16,7 +16,7 @@ public class IntroOverlay {
     private Timer timer;
     private BufferedImage introImage, nameImg;
     private int index = -50;
-    public int effectSpeed = 5, effectTick, effectIndex;
+    private int effectSpeed = 5, effectTick, effectIndex;
  
     private boolean isTextVisible = true;
 

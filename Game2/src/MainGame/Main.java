@@ -9,7 +9,7 @@ public class Main {
 	public static void main(String[] args) {
 		JFrame window = new JFrame();
 		GamePanel gamePanel = new GamePanel();
-		//NEW
+		
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.addWindowListener(new WindowAdapter() {
 	        @Override
@@ -18,24 +18,16 @@ public class Main {
 	           gamePanel.updateAndCloseFile();
 	        }
 	    });
-		//NEW
-		
-		
 		
 		window.setResizable(false);
-		window.setTitle("CLONELY HOMO 1");
-
-		
+		window.setTitle("CLONELY HOMO 1");	
 		window.add(gamePanel);
-		window.pack(); //màn hình được chỉnh kích thước giống với khởi tạo trong GamePanel
-
+		window.pack(); 
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 
-		//NEW
 		gamePanel.setupGameStart();
 		gamePanel.startGameThread();
-		
 	}
 }
 
